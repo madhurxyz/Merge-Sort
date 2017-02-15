@@ -1,51 +1,41 @@
-from bubble_sort import bubble_sort
-
-temp = []
-
 def merge_sort(array):
-    divide(array, temp, 0, len(array)-1)
+    # splitting
+    if len(array)>1:
+        middle = len(array)//2
+        left_array = array[:middle]
+        right_array = array[middle:]
 
-def divide(array, temp, leftStart, rightEnd):
-    if leftStart >= rightEnd:
-        return
+        merge_sort(left_array)
+        merge_sort(right_array)
 
-    middle = (leftStart + rightEnd)/2
+        left = 0
+        right = 0
+        index = 0
 
-    divide(array, temp, leftStart, middle)
-    divide(array, temp, middle + 1, rightEnd)
-    merge(array, temp, leftStart, rightEnd)
+        # walk through array halves and copy over the smaller elements
+        while left < len(left_array) and right < len(right_array):
+            if left_array[left] < right_array[right]:
+                array[index]=left_array[left]
+                left += 1
+            else:
+                array[index]=right_array[right]
+                right += 1
+            index += 1
 
-def merge(array, temp, leftStart, rightEnd):
-    leftEnd = (rightEnd + leftStart)/2
-    rightStart = leftEnd + 1
-    size = rightEnd - leftStart + 1
-
-    left = leftStart
-    right = rightStart
-    index = leftStart
-
-    while left <= leftEnd and right <= rightEnd:
-        if array[left] <= array[right]:
-            temp[index] = array[left]
+        # walk through array halves and copy over the remaining elements
+        while left < len(left_array):
+            array[index]=left_array[left]
             left += 1
-        else:
-            temp[index] = array[right]
+            index += 1
+
+        while right < len(right_array):
+            array[index]=right_array[right]
             right += 1
-        index += 1
-
-    for i in range(leftEnd - left + 1):
-        temp.append(array[i])
-
-    for i in range(rightEnd - right + 1):
-        temp.append(array[i])
-
-    for i in range(size):
-        array.append(temp[i])
-
-
-
-
+            index += 1
 
 if __name__ == "__main__":
-    array = [0, 6, 3, 40, 35, 86, 73, 96, 12, 5, 10]
+    import random
+    array = [random.randint(-1000,1000) for _ in range(100)]
+    print "\nUnsorted Array: {}\n".format(array)
     merge_sort(array)
+    print "\nSorted Array: {}\n".format(array)
