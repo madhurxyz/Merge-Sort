@@ -1,19 +1,7 @@
 from bubble_sort import bubble_sort
 
-# def divide(array):
-#     left = array[0:len(array)/2]
-#     right = array[len(array)/2 + 1: len(array)]
-#
-#     if len(left) != 2 or len(left) != 3:
-#         divide(left)
-#     elif len(left) == 2 or len(left) == 3:
-#         bubble_sort(left)
-#
-#     if len(right) != 2 or len(right) != 3:
-#         divide(right)
-#     elif len(right) == 2 or len(right) == 3:
-#         bubble_sort(right)
 temp = []
+
 def merge_sort(array):
     divide(array, temp, 0, len(array)-1)
 
@@ -38,14 +26,24 @@ def merge(array, temp, leftStart, rightEnd):
 
     while left <= leftEnd and right <= rightEnd:
         if array[left] <= array[right]:
-            temp[index] =  array[left]
+            temp[index] = array[left]
             left += 1
         else:
             temp[index] = array[right]
             right += 1
         index += 1
 
-    
+    for i in range(leftEnd - left + 1):
+        temp.append(array[i])
+
+    for i in range(rightEnd - right + 1):
+        temp.append(array[i])
+
+    for i in range(size):
+        array.append(temp[i])
+
+
+
 
 
 if __name__ == "__main__":
